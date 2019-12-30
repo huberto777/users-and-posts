@@ -1,26 +1,19 @@
-import React, { Component } from 'react';
+/* eslint-disable eqeqeq */
+/* eslint-disable react/state-in-constructor */
+import React from 'react';
+import phoneNumberPropType from 'phone-number-prop-type';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toggleCreate as toggleCreateAction } from 'actions';
 import Button from 'components/Button/Button';
 import styled from 'styled-components';
 import PostAdd from 'views/Posts/PostAdd';
 import PostItem from 'views/Posts/PostItem';
+import PropTypes from 'prop-types';
 
 const StyledWrapper = styled.div`
   margin: 20px 0 0 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 85px;
   width: 100vh;
-
-  /* responsywność templatu */
-  @media (max-width: 1500px) {
-    grid-gap: 45px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 1300px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 const StyledButton = styled(Button)`
@@ -28,7 +21,7 @@ const StyledButton = styled(Button)`
   width: 95vh;
   height: 30px;
 
-  @media (max-width: 750px) {
+  /* @media (max-width: 750px) {
     width: 75vh;
   }
 
@@ -37,14 +30,13 @@ const StyledButton = styled(Button)`
   }
   @media (max-width: 450px) {
     width: 35vh;
-  }
+  } */
 `;
 
 const UserWrapper = styled.div`
-  float: left;
-  width: 95vh;
-  display: flex;
-  flex-direction: column;
+  /* width: 95vh; */
+  /* display: flex;
+  flex-direction: column; */
 `;
 
 const StyledItemWrapper = styled.div``;
@@ -59,9 +51,7 @@ const Item = styled.div`
   font-weight: ${({ theme }) => theme.bold};
   margin-right: 5px;
   float: left;
-  margin-bottom: 20px;
-
- 
+  margin-bottom: 30px;
 `;
 const ItemValue = styled.div`
   width: 70vh;
@@ -69,74 +59,72 @@ const ItemValue = styled.div`
   padding-bottom: 10px;
   padding-left: 10px;
   float: left;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 
-  @media (max-width: 750px) {
+  /* @media (max-width: 750px) {
     width: 55vh;
-  }
-
-  
+  } */
 `;
 
-const InputWrapper = styled.div`
-  float: left;
-  width: 95vh;
-  display: flex;
-  flex-direction: column;
-`;
+const UserDetails = ({ activeItem, posts, create, toggleCreate, match }) => {
+  const [user] = activeItem;
+  // console.log(activeItem);
+  return (
+    <StyledWrapper>
+      <UserWrapper>
+        {create || (
+          <Link to="/">
+            <StyledButton cancel>CANCEL</StyledButton>
+          </Link>
+        )}
+        <StyledItemWrapper>
+          <Item>name: </Item>
+          <ItemValue>{user.name || 'no data'}</ItemValue>
+          <Item>surname: </Item>
+          <ItemValue>{user.surname || 'no data'}</ItemValue>
+          <Item>email: </Item>
+          <ItemValue>{user.email || 'no data'}</ItemValue>
+          <Item>phone: </Item>
+          <ItemValue>{user.phone || 'no data'}</ItemValue>
+          <Item>address: </Item>
+          <ItemValue>{user.address || 'no data'}</ItemValue>
+        </StyledItemWrapper>
+      </UserWrapper>
+      {!create || <PostAdd match={match} />}
+      {create || (
+        <StyledButton onClick={toggleCreate} add>
+          add post
+        </StyledButton>
+      )}
+      {posts.map((post, index) => (
+        <PostItem key={post.id} post={post} index={index} />
+      ))}
+    </StyledWrapper>
+  );
+};
 
-class UserDetails extends Component {
-  state = {
-    posts: [],
-    id: 1,
-  };
-  addPost = (title, content) => {
-    const { id } = this.state;
-    let post = {
-      id,
-      title,
-      content,
-      userId: this.props.match.params.id,
-    };
-    this.setState(prevState => ({
-      posts: [...prevState.posts, post],
-      id: id + 1,
-    }));
-  };
-  componentDidMount() {
-    console.log(this.props);
-  }
-  render() {
-    const { posts } = this.state;
+UserDetails.propTypes = {
+  activeItem: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      surname: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      phone: phoneNumberPropType.isRequired,
+      address: PropTypes.string.isRequired,
+    }),
+  ),
+  toggleCreate: PropTypes.func.isRequired,
+};
 
-    return (
-      <StyledWrapper>
-        <UserWrapper>
-          <StyledButton as={Link} to="/" cancel>
-            back
-          </StyledButton>
-          <StyledItemWrapper>
-            <Item>name: </Item>
-            <ItemValue>Mark</ItemValue>
-            <Item>surname: </Item>
-            <ItemValue>Ccacgchacvh</ItemValue>
-            <Item>email: </Item>
-            <ItemValue>maniek@op.pl</ItemValue>
-            <Item>phone: </Item>
-            <ItemValue>+48235625869</ItemValue>
-            <Item>address: </Item>
-            <ItemValue>os. Złotego Wieku 55/55, 31-618 Kraków, district: Małopolska</ItemValue>
-          </StyledItemWrapper>
-        </UserWrapper>
-        <InputWrapper>
-          <PostAdd addPost={this.addPost} />
-          {posts.map((post, index) => (
-            <PostItem key={post.id} post={post} index={index} />
-          ))}
-        </InputWrapper>
-      </StyledWrapper>
-    );
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  activeItem: state.users.filter(item => item.id == ownProps.match.params.id),
+  posts: state.posts.filter(post => post.userId == ownProps.match.params.id),
+  create: state.create,
+});
 
-export default UserDetails;
+const mapDispatchToProps = dispatch => ({
+  toggleCreate: () => dispatch(toggleCreateAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetails);

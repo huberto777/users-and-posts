@@ -6,9 +6,7 @@ import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/mainTheme';
 
 class MainTemplate extends Component {
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps, prevState) {}
+  
 
   render() {
     const { children } = this.props;
@@ -21,9 +19,5 @@ class MainTemplate extends Component {
     );
   }
 }
-
-// MainTemplate.propTypes = {
-//   children: PropTypes.element.isRequired,
-// };
 
 export default MainTemplate;

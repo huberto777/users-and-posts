@@ -1,45 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { toggleCreate as toggleCreateAction, addPost as addPostAction } from 'actions';
 import Input from 'components/Input/Input';
-import Paragraph from 'components/Paragraph/Paragraph';
-import Button from 'components/Button/Button';
+import Heading from 'components/Heading/Heading';
+import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+import plusIcon from 'assets/icons/plus.svg';
+import iksIcon from 'assets/icons/iks.svg';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { Formik, Form } from 'formik';
 
-const StyledButton = styled(Button)`
-  margin: 20px 0 20px 0;
-  width: 95vh;
-  height: 30px;
-
-  @media (max-width: 750px) {
-    width: 75vh;
-  }
-
-  @media (max-width: 600px) {
-    width: 55vh;
-  }
-  @media (max-width: 450px) {
-    width: 35vh;
-  }
+const StyledWrapper = styled.div`
+  border-left: 10px solid ${({ theme }) => theme.add};
+  z-index: 9999;
+  position: fixed;
+  display: flex;
+  padding: 10px 30px;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 70vh;
+  background-color: white;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  transform: translate(${({ create }) => (create ? '0' : '0%')});
+  transition: transform 0.25s ease-in-out;
 `;
 
-const StyledTextarea = styled(Input)`
-  margin: 20px 0 0 0;
-  height: 30vh;
-  width: 95vh;
-
-  @media (max-width: 750px) {
-    width: 75vh;
-  }
-
-  @media (max-width: 600px) {
-    width: 55vh;
-  }
-  @media (max-width: 450px) {
-    width: 35vh;
-  }
-`;
 const StyledInput = styled(Input)`
-  margin: 20px 0 0 0;
-  width: 95vh;
+  margin-top: 20px;
   /* responsywność templatu */
   @media (max-width: 750px) {
     width: 75vh;
@@ -52,85 +41,88 @@ const StyledInput = styled(Input)`
     width: 35vh;
   }
 `;
+const StyledTextarea = styled(Input)`
+  margin-top: 20px;
+  height: 30vh;
 
-const ErrorField = styled.p`
-  font-size: 1.5rem;
-  color: red;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
+  @media (max-width: 750px) {
+    width: 75vh;
+  }
+
+  @media (max-width: 600px) {
+    width: 55vh;
+  }
+  @media (max-width: 450px) {
+    width: 35vh;
+  }
+`;
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
 `;
 
-class PostAdd extends Component {
-  state = {
-    title: '',
-    content: '',
-    errorTitle: '',
-    errorContent: '',
-  };
-  handleInput = e => {
-    e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-  validate = () => {
-    const { title, content } = this.state;
-    if (title.length < 3) {
-      this.setState({
-        errorTitle: 'the title field must have min. 3 characters',
-      });
-      return false;
-    } else {
-      this.setState({
-        errorTitle: '',
-      });
-    }
-    if (content.length < 3) {
-      this.setState({
-        errorContent: 'the content field must have min. 3 characters',
-      });
-      return false;
-    } else {
-      this.setState({
-        errorContent: '',
-      });
-    }
-    return true;
-  };
-  add = () => {
-    const { title, content } = this.state;
-    const isValid = this.validate();
-    if (!isValid) return;
-    this.props.addPost(title, content);
-    this.setState({
-      title: '',
-      content: '',
-      errorTitle: '',
-      errorContent: '',
-    });
-  };
-  render() {
-    const { title, content, errorTitle, errorContent } = this.state;
-    return (
-      <>
-        <Paragraph>Add Post</Paragraph>
-        <StyledInput placeholder="title" value={title} onChange={this.handleInput} name="title" />
-        <ErrorField>{errorTitle}</ErrorField>
-        <StyledTextarea
-          as="textarea"
-          placeholder="conetnt"
-          value={content}
-          onChange={this.handleInput}
-          name="content"
-        />
-        <ErrorField>{errorContent}</ErrorField>
-        <StyledButton add onClick={this.add}>
-          add post
-        </StyledButton>
-      </>
-    );
-  }
-}
+const Error = styled.span`
+  color: red;
+  font-weight: ${({ theme }) => theme.light};
+`;
 
-export default PostAdd;
+const PostAdd = ({toggleCreate, addPost, match}) => (
+  <StyledWrapper>
+    <Heading>Add Post</Heading>
+    <Formik
+      initialValues={{ title: '', content: '', userId: parseInt(match.params.id) }}
+      validate={values => {
+        const errors = {};
+        if (values.title.length < 3) {
+          errors.title = 'The field title must have min. 3 characters';
+        }
+        if (values.content.length < 5) {
+          errors.content = 'The field title must have min. 5 characters';
+        }
+
+        return errors;
+      }}
+      onSubmit={values => {
+        addPost(values);
+      }}
+    >
+      {({ values, errors, touched, handleChange, isSubmitting }) => (
+        <StyledForm>
+          <StyledInput
+            type="text"
+            name="title"
+            onChange={handleChange}
+            value={values.title}
+            placeholder="title"
+          />
+          {errors.title && touched.title && <Error>{errors.title}</Error>}
+          <StyledTextarea
+            as="textarea"
+            type="text"
+            name="content"
+            onChange={handleChange}
+            value={values.content}
+            placeholder="content"
+          />
+          {errors.content && touched.content && <Error>{errors.content}</Error>}
+
+          <ButtonIcon type="submit" icon={plusIcon} add disabled={isSubmitting} />
+          <ButtonIcon icon={iksIcon} cancel onClick={() => toggleCreate()} />
+        </StyledForm>
+      )}
+    </Formik>
+  </StyledWrapper>
+);
+
+PostAdd.propTypes = {
+  addPost: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  toggleCreate: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = dispatch => ({
+  toggleCreate: () => dispatch(toggleCreateAction()),
+  addPost: (id, ...postContent) => dispatch(addPostAction(id, ...postContent)),
+});
+
+export default connect(null, mapDispatchToProps)(PostAdd);

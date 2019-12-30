@@ -1,12 +1,25 @@
-import React, { Component } from 'react';
+/* eslint-disable react/state-in-constructor */
+import React from 'react';
+import { connect } from 'react-redux';
+import { addComment as addCommentAction } from 'actions';
 import styled from 'styled-components';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
+import PropTypes from 'prop-types';
+import { Formik, Form } from 'formik';
 
-const ContentWrapper = styled.div`
-  margin-bottom: 10px;
-  margin-left: 40%;
+const StyledWrapper = styled.div`
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  width: 100vh;
+  background-color: white;
+  margin-left: 50vh;
+  float: right;
 `;
+
 
 const CommentWrapper = styled.div`
   background-color: ${({ theme }) => theme.delete};
@@ -18,6 +31,7 @@ const CommentWrapper = styled.div`
   font-weight: ${({ theme }) => theme.bold};
   width: 100%;
   margin-top: 20px;
+  float: left;
 `;
 
 const StyledButton = styled(Button)`
@@ -31,111 +45,92 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+`;
+const StyledInput = styled(Input)`
+  margin-top: 20px;
+`;
+
 const StyledTextarea = styled(Input)`
   margin: 20px 0 0 0;
   height: 30vh;
-  width: 100%;
-`;
-const StyledInput = styled(Input)`
-  margin: 20px 0 0 0;
-  width: 100%;
 `;
 
-const ErrorField = styled.p`
-  font-size: 1.5rem;
+const Error = styled.span`
   color: red;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
+  font-weight: ${({ theme }) => theme.light};
 `;
 
-class CommentAdd extends Component {
-  state = {
-    name: '',
-    email: '',
-    body: '',
-    errorName: '',
-    errorEmail: '',
-    errorBody: '',
-  };
-  validate = () => {
-    const { name, email, body } = this.state;
-    if (name.length < 3) {
-      this.setState({
-        errorName: 'name field must have min. 3 characters',
-      });
-      return false;
-    } else {
-      this.setState({
-        errorName: '',
-      });
-    }
-    if (!email.includes('@')) {
-      this.setState({
-        errorEmail: 'invalid email address',
-      });
-      return false;
-    } else {
-      this.setState({
-        errorEmail: '',
-      });
-    }
-    if (body.length < 3) {
-      this.setState({
-        errorBody: 'body field must have min. 3 characters',
-      });
-      return false;
-    } else {
-      this.setState({
-        errorBody: '',
-      });
-    }
+const CommentAdd = ({ postIndex, post, addComment }) => (
+  <>
+    <StyledWrapper>
+      <CommentWrapper>Create comment to post nr {postIndex + 1} </CommentWrapper>
+      <Formik
+        initialValues={{ name: '', email: '', body: '', postId: post.id }}
+        validate={values => {
+          const errors = {};
+          if (values.name.length < 3) {
+            errors.name = 'The field name must have min. 3 characters';
+          }
+          if (!values.email) {
+            errors.email = 'Required';
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+            errors.email = 'Invalid email address';
+          }
+          if (values.body.length < 5) {
+            errors.body = 'The field body must have min. 5 characters';
+          }
+          return errors;
+        }}
+        onSubmit={values => {
+          addComment(values);
+        }}
+      >
+        {({ values, errors, touched, handleChange, isSubmitting }) => (
+          <StyledForm>
+            <StyledInput
+              type="name"
+              name="name"
+              onChange={handleChange}
+              placeholder="name"
+              value={values.email}
+            />
+            {errors.name && touched.name && <Error>{errors.name}</Error>}
+            <StyledInput
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={values.password}
+              placeholder="email"
+            />
+            {errors.email && touched.email && <Error>{errors.email}</Error>}
+            <StyledTextarea
+              as="textarea"
+              placeholder="body"
+              name="body"
+              value={values.body}
+              onChange={handleChange}
+            />
+            {errors.body && touched.body && <Error>{errors.body}</Error>}
+            <StyledButton type="submit" disabled={isSubmitting}>
+              Submit
+            </StyledButton>
+          </StyledForm>
+        )}
+      </Formik>
+    </StyledWrapper>
+  </>
+);
 
-    return true;
-  };
-  handleInput = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-  add = () => {
-    const { name, email, body } = this.state;
-    const isValid = this.validate();
-    const postId = this.props.post.id;
-    if (!isValid) return;
-    this.props.addComment(name, email, body, postId);
-    this.setState({
-      name: '',
-      email: '',
-      body: '',
-    });
-  };
-  render() {
-    const { name, email, body, errorName, errorBody, errorEmail } = this.state;
-    const { postIndex } = this.props;
-    return (
-      <>
-        <ContentWrapper>
-          <CommentWrapper>Create comment to post nr {postIndex + 1} </CommentWrapper>
-          <StyledInput placeholder="name" name="name" value={name} onChange={this.handleInput} />
-          <ErrorField>{errorName}</ErrorField>
-          <StyledInput placeholder="email" name="email" value={email} onChange={this.handleInput} />
-          <ErrorField>{errorEmail}</ErrorField>
-          <StyledTextarea
-            as="textarea"
-            placeholder="body"
-            name="body"
-            value={body}
-            onChange={this.handleInput}
-          />
-          <ErrorField>{errorBody}</ErrorField>
-          <StyledButton add onClick={this.add}>
-            add comment
-          </StyledButton>
-        </ContentWrapper>
-      </>
-    );
-  }
-}
+CommentAdd.propTypes = {
+  addComment: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+};
 
-export default CommentAdd;
+const mapDispatchToProps = dispatch => ({
+  addComment: (id, ...commentContent) => dispatch(addCommentAction(id, ...commentContent)),
+});
+
+export default connect(null, mapDispatchToProps)(CommentAdd);

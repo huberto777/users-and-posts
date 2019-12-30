@@ -43,7 +43,7 @@ const Navigation = () => (
         POSTS
       </NavLink>
     </Ul>
-    <Input search placeholder="search" />
+   <Input search placeholder="search" /> 
   </NavBar>
 );
 
