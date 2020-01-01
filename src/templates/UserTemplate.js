@@ -16,7 +16,7 @@ const Th = styled.th`
   padding-left: 5px;
 `;
 
-const UserTemplate = ({ children, edit, users }) => (
+const UserTemplate = ({ children, users }) => (
   <Table>
     <thead>
       {users.length === 0 ? (
@@ -29,13 +29,9 @@ const UserTemplate = ({ children, edit, users }) => (
           <Th>name</Th>
           <Th>surname</Th>
           <Th>email</Th>
-          {edit || (
-            <>
-              <Th>view</Th>
-              <Th>edit</Th>
-              <Th>del</Th>
-            </>
-          )}
+          <Th>view</Th>
+          <Th>edit</Th>
+          <Th>del</Th>
         </Tr>
       )}
     </thead>

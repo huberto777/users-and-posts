@@ -22,12 +22,20 @@ const NavBar = styled.nav`
   a:hover {
     color: ${({ theme }) => theme.add};
   }
+
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
 `;
 const Ul = styled.ul`
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+`;
+
+const StyledInput = styled(Input)`
+  width: 25%;
 `;
 
 const Navigation = () => (
@@ -43,7 +51,7 @@ const Navigation = () => (
         POSTS
       </NavLink>
     </Ul>
-   <Input search placeholder="search" /> 
+    <StyledInput search placeholder="search" />
   </NavBar>
 );
 

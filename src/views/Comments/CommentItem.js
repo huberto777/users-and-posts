@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContentWrapper = styled.div`
-  margin-left: 40vh;
+  margin-left: 20%;
 `;
 const CommentWrapper = styled.div`
   background-color: ${({ theme }) => theme.update};
@@ -17,25 +17,20 @@ const CommentWrapper = styled.div`
   display: inline-block;
   width: 100%;
 `;
-const StyledItemWrapper = styled.div``;
+
 const Item = styled.div`
-  width: 20vh;
+  width: 20%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.grey300};
   font-weight: ${({ theme }) => theme.bold};
-  width: 20vh;
   float: left;
-  margin: 0 5px 0 0;
 `;
 const ItemValue = styled.div`
-  width: 70vh;
+  width: 80%;
   float: left;
-  /* padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px; */
   padding: 10px 0 10px 10px;
 `;
 
@@ -48,10 +43,10 @@ const CommentItem = ({ comment, post }) => {
       <CommentWrapper>
         Comment by {comment.name} ({comment.email})
       </CommentWrapper>
-      <StyledItemWrapper>
+      <div>
         <Item>body:</Item>
         <ItemValue>{comment.body}</ItemValue>
-      </StyledItemWrapper>
+      </div>
     </ContentWrapper>
   );
 };

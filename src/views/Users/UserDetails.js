@@ -13,57 +13,33 @@ import PropTypes from 'prop-types';
 
 const StyledWrapper = styled.div`
   margin: 20px 0 0 0;
-  width: 100vh;
+  width: 100%;
 `;
 
 const StyledButton = styled(Button)`
   margin-bottom: 20px;
-  width: 95vh;
+  width: 100%;
   height: 30px;
-
-  /* @media (max-width: 750px) {
-    width: 75vh;
-  }
-
-  @media (max-width: 600px) {
-    width: 55vh;
-  }
-  @media (max-width: 450px) {
-    width: 35vh;
-  } */
 `;
-
-const UserWrapper = styled.div`
-  /* width: 95vh; */
-  /* display: flex;
-  flex-direction: column; */
-`;
-
-const StyledItemWrapper = styled.div``;
 
 const Item = styled.div`
-  width: 20vh;
+  width: 15%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.grey300};
   font-weight: ${({ theme }) => theme.bold};
-  margin-right: 5px;
   float: left;
   margin-bottom: 30px;
 `;
 const ItemValue = styled.div`
-  width: 70vh;
+  width: 85%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   float: left;
   margin-bottom: 30px;
-
-  /* @media (max-width: 750px) {
-    width: 55vh;
-  } */
 `;
 
 const UserDetails = ({ activeItem, posts, create, toggleCreate, match }) => {
@@ -71,13 +47,13 @@ const UserDetails = ({ activeItem, posts, create, toggleCreate, match }) => {
   // console.log(activeItem);
   return (
     <StyledWrapper>
-      <UserWrapper>
+      <div>
         {create || (
           <Link to="/">
             <StyledButton cancel>CANCEL</StyledButton>
           </Link>
         )}
-        <StyledItemWrapper>
+        <div>
           <Item>name: </Item>
           <ItemValue>{user.name || 'no data'}</ItemValue>
           <Item>surname: </Item>
@@ -88,8 +64,8 @@ const UserDetails = ({ activeItem, posts, create, toggleCreate, match }) => {
           <ItemValue>{user.phone || 'no data'}</ItemValue>
           <Item>address: </Item>
           <ItemValue>{user.address || 'no data'}</ItemValue>
-        </StyledItemWrapper>
-      </UserWrapper>
+        </div>
+      </div>
       {!create || <PostAdd match={match} />}
       {create || (
         <StyledButton onClick={toggleCreate} add>

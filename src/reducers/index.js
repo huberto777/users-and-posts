@@ -1,3 +1,13 @@
+import {
+  ADD_USER,
+  REMOVE_ITEM,
+  TOGGLE_CREATE,
+  EDIT_USER,
+  UPDATE_USER,
+  ADD_POST,
+  ADD_COMMENT,
+} from 'actions/types';
+
 const initialState = {
   create: false,
   edit: false,
@@ -11,7 +21,7 @@ const initialState = {
       surname: 'Doe',
       email: 'john.doe@example.com',
       phone: '+48785524236',
-      address: 'ul. Nowa 27, Kraków',
+      address: 'Reymonta 22, Cracow, district Malopolska',
     },
     {
       id: 2,
@@ -19,14 +29,14 @@ const initialState = {
       surname: 'Carpenter',
       email: 'mark@op.pl',
       phone: '+4878552933236',
-      address: 'os. Złotego Wieku 55/55 31-622 Kraków',
+      address: 'Lea street, Cracow, district Malopolska',
     },
   ],
   posts: [
     {
       id: 1,
       title: 'new title',
-      content: 'new all content for new design i teh ne w itemm bar new item bar, redux and react',
+      content: 'new all content for new design i the new itemm bar new item bar, redux and react',
       userId: 1,
     },
     { id: 2, title: 'all title', content: 'all all content', userId: 1 },
@@ -58,50 +68,50 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'REMOVE_ITEM':
+    case REMOVE_ITEM:
       return {
         ...state,
         users: [...state.users.filter(item => item.id !== action.payload)],
       };
-    case 'ADD_USER':
+    case ADD_USER:
       return {
         ...state,
         users: [...state.users, action.payload],
         create: !state.create,
         userId: state.userId + 1,
       };
-    case 'ADD_POST':
+    case ADD_POST:
       return {
         ...state,
         posts: [...state.posts, action.payload],
         create: !state.create,
         postId: state.postId + 1,
       };
-    case 'ADD_COMMENT':
+    case ADD_COMMENT:
       return {
         ...state,
         comments: [...state.comments, action.payload],
         create: !state.create,
         commentId: state.commentId + 1,
       };
-    case 'TOGGLE_CREATE':
+    case TOGGLE_CREATE:
       return {
         ...state,
         create: !state.create,
       };
-    case 'TOGGLE_EDIT':
+    case EDIT_USER:
       return {
         ...state,
         edit: !state.edit,
       };
-    case 'EDIT_USER':
+    case UPDATE_USER:
       return {
         ...state,
         users: state.users.map(user => {
           if (user.id !== action.payload.id) {
             return user;
           }
-          return { ...user, name: action.payload.name };
+          return action.payload;
         }),
         edit: !state.edit,
       };

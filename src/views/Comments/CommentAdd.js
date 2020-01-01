@@ -10,16 +10,16 @@ import { Formik, Form } from 'formik';
 
 const StyledWrapper = styled.div`
   z-index: 9999;
+  margin-left: 30%;
   display: flex;
   flex-direction: column;
   right: 0;
   top: 0;
-  width: 100vh;
+  width: 70%;
   background-color: white;
-  margin-left: 50vh;
-  float: right;
+  margin-left: 30%;
+  float:left;
 `;
-
 
 const CommentWrapper = styled.div`
   background-color: ${({ theme }) => theme.delete};
@@ -38,11 +38,6 @@ const StyledButton = styled(Button)`
   margin: 20px 0 20px 0;
   width: 100%;
   height: 30px;
-
-  @media (max-width: 500px) {
-    width: 60vh;
-    height: 30px;
-  }
 `;
 
 const StyledForm = styled(Form)`
@@ -54,7 +49,7 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledTextarea = styled(Input)`
-  margin: 20px 0 0 0;
+  margin-top: 20px;
   height: 30vh;
 `;
 
@@ -64,7 +59,6 @@ const Error = styled.span`
 `;
 
 const CommentAdd = ({ postIndex, post, addComment }) => (
-  <>
     <StyledWrapper>
       <CommentWrapper>Create comment to post nr {postIndex + 1} </CommentWrapper>
       <Formik
@@ -121,7 +115,6 @@ const CommentAdd = ({ postIndex, post, addComment }) => (
         )}
       </Formik>
     </StyledWrapper>
-  </>
 );
 
 CommentAdd.propTypes = {

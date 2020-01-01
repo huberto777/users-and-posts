@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { editUser as editUserAction, removeItem as removeItemAction } from 'actions';
+import { removeItem as removeItemAction } from 'actions';
 import { Link } from 'react-router-dom';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import removeIcon from 'assets/icons/rubbish-bin.svg';
@@ -26,8 +26,8 @@ const StyledButtonIcon = styled(ButtonIcon)`
 `;
 
 const UserItem = props => {
-  const { id, name, surname, email, phone, address } = props.user;
-  const { index, editUser, removeItem } = props;
+  const { id, name, surname, email } = props.user;
+  const { index, removeItem } = props;
   const style = { width: '15px' };
   return (
     <Tr>
@@ -41,11 +41,9 @@ const UserItem = props => {
         </Link>
       </Td>
       <Td style={style}>
-        <StyledButtonIcon
-          onClick={() => editUser(id, name, surname, email, phone, address)}
-          icon={penIcon}
-          edit
-        />
+        <Link to={`/users/${id}/edit`}>
+          <StyledButtonIcon icon={penIcon} edit />
+        </Link>
       </Td>
       <Td style={style}>
         <StyledButtonIcon onClick={() => removeItem(id)} icon={removeIcon} del />
@@ -56,11 +54,11 @@ const UserItem = props => {
 
 UserItem.propTypes = {
   removeItem: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   removeItem: id => dispatch(removeItemAction(id)),
-  editUser: () => dispatch(editUserAction()),
 });
 
 export default connect(null, mapDispatchToProps)(UserItem);

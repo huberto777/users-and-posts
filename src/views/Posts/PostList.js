@@ -14,9 +14,10 @@ const StyledHeading = styled(Heading)`
 `;
 const ContentWrapper = styled.div`
   width: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   margin-bottom: 10px;
 `;
+
 const PostList = ({ posts, comments }) => (
   <>
     <StyledHeading>Posts list</StyledHeading>

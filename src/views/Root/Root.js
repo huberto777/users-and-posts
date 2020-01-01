@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import { routes } from 'routes';
 import UserList from 'views/Users/UserList';
+import UserEdit from 'views/Users/UserEdit';
 import UserDetails from 'views/Users/UserDetails';
 import PostList from 'views/Posts/PostList';
 import Navigation from 'components/Navigation/Navigation';
@@ -21,8 +22,8 @@ const Root = () => {
             <Route exact path={routes.users} component={UserList} />
             <Route exact path={routes.posts} component={PostList} />
             <Route exact path={routes.user} component={UserDetails} />
+            <Route exact path={routes.edit} component={UserEdit} />
             <Route component={ErrorPage} />
-            {/* <Route exact path={routes.post} component={PostDetails} /> */}
           </Switch>
         </MainTemplate>
       </BrowserRouter>

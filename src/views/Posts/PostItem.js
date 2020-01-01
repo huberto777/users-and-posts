@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   float: left;
-  width: 95vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -18,44 +18,27 @@ const PostWrapper = styled.div`
   float: left;
   font-weight: ${({ theme }) => theme.bold};
   margin-bottom: 15px;
+  width: 100%;
 `;
 
-const StyledItemWrapper = styled.div``;
-
 const Item = styled.div`
-  width: 20vh;
+  width: 20%;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.grey300};
   font-weight: ${({ theme }) => theme.bold};
-  margin-right: 5px;
   float: left;
   margin-bottom: 30px;
-
-  @media (max-width: 784px) {
-    width: 15vh;
-  }
-
-  @media (max-width: 480px) {
-    width: 12vh;
-  }
 `;
 const ItemValue = styled.div`
-  width: 70vh;
+  width: 80%;
   float: left;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   margin-bottom: 30px;
-
-  @media (max-width: 784px) {
-    width: 80vh;
-  }
-  @media (max-width: 480px) {
-    width: 60vh;
-  }
 `;
 
 const PostItem = props => {
@@ -64,12 +47,12 @@ const PostItem = props => {
   return (
     <StyledWrapper>
       <PostWrapper>post nr {index + 1}</PostWrapper>
-      <StyledItemWrapper>
+      <div>
         <Item>title:</Item>
         <ItemValue>{title}</ItemValue>
         <Item>content:</Item>
         <ItemValue>{content}</ItemValue>
-      </StyledItemWrapper>
+      </div>
     </StyledWrapper>
   );
 };

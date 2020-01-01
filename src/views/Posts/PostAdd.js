@@ -19,42 +19,17 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   right: 0;
   top: 0;
-  height: 100vh;
-  width: 70vh;
+  height: 100%;
+  width: 100%;
   background-color: white;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  transform: translate(${({ create }) => (create ? '0' : '0%')});
-  transition: transform 0.25s ease-in-out;
 `;
 
 const StyledInput = styled(Input)`
   margin-top: 20px;
-  /* responsywność templatu */
-  @media (max-width: 750px) {
-    width: 75vh;
-  }
-
-  @media (max-width: 600px) {
-    width: 55vh;
-  }
-  @media (max-width: 450px) {
-    width: 35vh;
-  }
 `;
 const StyledTextarea = styled(Input)`
   margin-top: 20px;
   height: 30vh;
-
-  @media (max-width: 750px) {
-    width: 75vh;
-  }
-
-  @media (max-width: 600px) {
-    width: 55vh;
-  }
-  @media (max-width: 450px) {
-    width: 35vh;
-  }
 `;
 const StyledForm = styled(Form)`
   display: flex;
@@ -90,10 +65,10 @@ const PostAdd = ({toggleCreate, addPost, match}) => (
         <StyledForm>
           <StyledInput
             type="text"
-            name="title"
-            onChange={handleChange}
-            value={values.title}
             placeholder="title"
+            name="title"            
+            value={values.title}
+            onChange={handleChange}
           />
           {errors.title && touched.title && <Error>{errors.title}</Error>}
           <StyledTextarea

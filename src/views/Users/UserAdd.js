@@ -19,24 +19,22 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   right: 0;
   top: 0;
-  height: 100vh;
-  width: 70vh;
+  height: 100%;
+  width: 100%;
   background-color: white;
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-  transform: translate(${({ create }) => (create ? '0' : '0%')});
-  transition: transform 0.25s ease-in-out;
 `;
 
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
+`;
 
-`;const StyledInput = styled(Input)`
+const StyledInput = styled(Input)`
   margin-top: 20px;
 `;
 
 const StyledTextarea = styled(Input)`
-  margin: 20px 0 0 0;
+  margin-top: 20px;
   height: 30vh;
 `;
 
