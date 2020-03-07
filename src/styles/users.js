@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Form } from 'formik';
-import Input from 'components/Input/Input';
 import Button from 'components/Button/Button';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import Heading from 'components/Heading/Heading';
@@ -17,20 +15,6 @@ const StyledWrapper = styled.div`
   height: 100%;
   width: 100%;
   background-color: white;
-`;
-
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledInput = styled(Input)`
-  margin-top: 20px;
-`;
-
-const StyledTextarea = styled(Input)`
-  margin-top: 20px;
-  height: 30vh;
 `;
 
 const StyledButton = styled(Button)`
@@ -88,9 +72,6 @@ const StyledHeading = styled(Heading)`
 
 export {
   StyledWrapper,
-  StyledForm,
-  StyledInput,
-  StyledTextarea,
   StyledButton,
   Item,
   ItemValue,

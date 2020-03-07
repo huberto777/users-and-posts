@@ -7,7 +7,8 @@ import plusIcon from 'assets/icons/plus.svg';
 import iksIcon from 'assets/icons/iks.svg';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import { StyledWrapper, StyledInput, StyledTextarea, StyledForm } from 'styles/posts';
+import { StyledWrapper } from 'styles/posts';
+import { StyledForm, StyledInput, StyledTextarea } from 'styles/forms';
 import { Error } from 'styles/error';
 
 const PostAdd = ({ toggleCreate, addPost, match }) => (

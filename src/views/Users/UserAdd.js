@@ -7,7 +7,8 @@ import plusIcon from 'assets/icons/plus.svg';
 import iksIcon from 'assets/icons/iks.svg';
 import { addUser as addUserAction } from 'actions';
 import { Formik } from 'formik';
-import { StyledWrapper, StyledForm, StyledInput, StyledTextarea } from 'styles/users';
+import { StyledWrapper } from 'styles/users';
+import { StyledInput, StyledTextarea, StyledForm } from 'styles/forms';
 import { Error } from 'styles/error';
 
 const UserAdd = ({ toggleCreate, create, addUser }) => {

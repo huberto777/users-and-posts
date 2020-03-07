@@ -4,14 +4,8 @@ import { connect } from 'react-redux';
 import { addComment as addCommentAction } from 'actions';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import {
-  StyledWrapper,
-  CommentWrapper,
-  StyledButton,
-  StyledForm,
-  StyledInput,
-  StyledTextarea,
-} from 'styles/comments';
+import { StyledWrapper, CommentWrapper, StyledButton } from 'styles/comments';
+import { StyledForm, StyledInput, StyledTextarea } from 'styles/forms';
 import { Error } from 'styles/error';
 
 const CommentAdd = ({ postIndex, post, addComment }) => (

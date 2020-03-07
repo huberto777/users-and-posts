@@ -11,7 +11,8 @@ import Heading from 'components/Heading/Heading';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import { Error } from 'styles/error';
-import { StyledWrapper, StyledInput, StyledTextarea, StyledForm } from 'styles/users';
+import { StyledWrapper } from 'styles/users';
+import { StyledInput, StyledTextarea, StyledForm } from 'styles/forms';
 
 const EditStyledWrapper = styled(StyledWrapper)`
   border-left: 10px solid ${({ theme }) => theme.update};

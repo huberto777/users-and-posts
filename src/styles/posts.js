@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { Form } from 'formik';
-import Input from 'components/Input/Input';
 import Heading from 'components/Heading/Heading';
 
 const StyledWrapper = styled.div`
@@ -15,18 +13,6 @@ const StyledWrapper = styled.div`
   height: 100%;
   width: 100%;
   background-color: white;
-`;
-
-const StyledInput = styled(Input)`
-  margin-top: 20px;
-`;
-const StyledTextarea = styled(Input)`
-  margin-top: 20px;
-  height: 30vh;
-`;
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
 `;
 
 const PostWrapper = styled.div`
@@ -56,9 +42,7 @@ const Item = styled.div`
 const ItemValue = styled.div`
   width: 80%;
   float: left;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px 0 10px 10px;
   margin-bottom: 30px;
 `;
 const StyledHeading = styled(Heading)`
@@ -72,14 +56,4 @@ const ContentWrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-export {
-  StyledWrapper,
-  StyledInput,
-  StyledTextarea,
-  StyledForm,
-  PostWrapper,
-  Item,
-  ItemValue,
-  StyledHeading,
-  ContentWrapper,
-};
+export { StyledWrapper, PostWrapper, Item, ItemValue, StyledHeading, ContentWrapper };
