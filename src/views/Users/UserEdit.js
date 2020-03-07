@@ -8,46 +8,20 @@ import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import updateIcon from 'assets/icons/update.svg';
 import iksIcon from 'assets/icons/iks.svg';
 import Heading from 'components/Heading/Heading';
-import Input from 'components/Input/Input';
 import styled from 'styled-components';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
+import { Error } from 'styles/error';
+import { StyledWrapper, StyledInput, StyledTextarea, StyledForm } from 'styles/users';
 
-const StyledWrapper = styled.div`
+const EditStyledWrapper = styled(StyledWrapper)`
   border-left: 10px solid ${({ theme }) => theme.update};
-  z-index: 9999;
-  position: fixed;
-  display: flex;
-  padding: 10px 30px;
-  flex-direction: column;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-`;
-
-const StyledInput = styled(Input)`
-  margin-top: 20px;
-`;
-const StyledTextarea = styled(Input)`
-  margin-top: 20px;
-  height: 30vh;
-`;
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Error = styled.span`
-  color: red;
-  font-weight: ${({ theme }) => theme.light};
 `;
 
 const UserEdit = props => {
   const [user] = props.activeUser;
   const { updateUser, history } = props;
   return (
-    <StyledWrapper>
+    <EditStyledWrapper>
       <Heading>
         Edit: {user.name} {user.surname}
       </Heading>
@@ -86,7 +60,6 @@ const UserEdit = props => {
         onSubmit={values => {
           updateUser(values);
           history.goBack();
-          console.log(values);
         }}
       >
         {({ values, errors, touched, handleChange, isSubmitting }) => (
@@ -117,7 +90,7 @@ const UserEdit = props => {
           </StyledForm>
         )}
       </Formik>
-    </StyledWrapper>
+    </EditStyledWrapper>
   );
 };
 

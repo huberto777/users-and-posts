@@ -1,22 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Heading from 'components/Heading/Heading';
-import styled from 'styled-components';
 import CommentItem from 'views/Comments/CommentItem';
 import CommentAdd from 'views/Comments/CommentAdd';
+import { StyledHeading, ContentWrapper } from 'styles/posts';
 import PostItem from './PostItem';
-
-const StyledHeading = styled(Heading)`
-  color: ${({ theme }) => theme.add};
-  text-transform: uppercase;
-  text-align: center;
-`;
-const ContentWrapper = styled.div`
-  width: 100%;
-  /* margin: 0 auto; */
-  margin-bottom: 10px;
-`;
 
 const PostList = ({ posts, comments }) => (
   <>

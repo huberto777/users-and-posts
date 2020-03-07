@@ -1,47 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleCreate as toggleCreateAction, addPost as addPostAction } from 'actions';
-import Input from 'components/Input/Input';
 import Heading from 'components/Heading/Heading';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import plusIcon from 'assets/icons/plus.svg';
 import iksIcon from 'assets/icons/iks.svg';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
+import { StyledWrapper, StyledInput, StyledTextarea, StyledForm } from 'styles/posts';
+import { Error } from 'styles/error';
 
-const StyledWrapper = styled.div`
-  border-left: 10px solid ${({ theme }) => theme.add};
-  z-index: 9999;
-  position: fixed;
-  display: flex;
-  padding: 10px 30px;
-  flex-direction: column;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-`;
-
-const StyledInput = styled(Input)`
-  margin-top: 20px;
-`;
-const StyledTextarea = styled(Input)`
-  margin-top: 20px;
-  height: 30vh;
-`;
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Error = styled.span`
-  color: red;
-  font-weight: ${({ theme }) => theme.light};
-`;
-
-const PostAdd = ({toggleCreate, addPost, match}) => (
+const PostAdd = ({ toggleCreate, addPost, match }) => (
   <StyledWrapper>
     <Heading>Add Post</Heading>
     <Formik
@@ -66,7 +35,7 @@ const PostAdd = ({toggleCreate, addPost, match}) => (
           <StyledInput
             type="text"
             placeholder="title"
-            name="title"            
+            name="title"
             value={values.title}
             onChange={handleChange}
           />

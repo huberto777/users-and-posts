@@ -51,7 +51,7 @@ const Navigation = () => (
         POSTS
       </NavLink>
     </Ul>
-    <StyledInput search placeholder="search" />
+   <StyledInput search placeholder="search" />
   </NavBar>
 );
 

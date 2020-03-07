@@ -1,33 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { removeItem as removeItemAction } from 'actions';
 import { Link } from 'react-router-dom';
-import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
+
 import removeIcon from 'assets/icons/rubbish-bin.svg';
 import penIcon from 'assets/icons/pen.svg';
 import infoIcon from 'assets/icons/info.svg';
 import PropTypes from 'prop-types';
+import { Td, Tr, StyledButtonIcon } from 'styles/users';
 
-const Tr = styled.tr`
-  height: 35px;
-  background-color: ${({ theme }) => theme.cancel};
-`;
 
-const Td = styled.td`
-  padding-right: 5px;
-  padding-left: 5px;
-  color: ${({ theme }) => theme.grey100};
-`;
-const StyledButtonIcon = styled(ButtonIcon)`
-  cursor: pointer;
-  margin: 0 auto;
-  display: block;
-`;
 
-const UserItem = props => {
-  const { id, name, surname, email } = props.user;
-  const { index, removeItem } = props;
+const UserItem = ({ user, index, removeItem }) => {
+  const { id, name, surname, email } = user;
   const style = { width: '15px' };
   return (
     <Tr>

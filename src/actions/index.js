@@ -1,5 +1,13 @@
 import store from '../store';
-import { ADD_USER, REMOVE_ITEM, TOGGLE_CREATE, EDIT_USER, UPDATE_USER, ADD_POST, ADD_COMMENT } from './types';
+
+import {
+  ADD_USER,
+  REMOVE_ITEM,
+  TOGGLE_CREATE,
+  UPDATE_USER,
+  ADD_POST,
+  ADD_COMMENT,
+} from './types';
 
 export const removeItem = id => ({ type: REMOVE_ITEM, payload: id });
 
@@ -18,14 +26,9 @@ export const toggleCreate = create => ({
   payload: create,
 });
 
-export const editUser = id => ({
-  type: EDIT_USER,
-  payload: { id },
-});
-
-export const updateUser = (userContent) => ({
+export const updateUser = userContent => ({
   type: UPDATE_USER,
-  payload: {...userContent},
+  payload: { ...userContent },
 });
 
 export const addPost = postContent => ({

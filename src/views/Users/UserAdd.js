@@ -1,47 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import Input from 'components/Input/Input';
 import Heading from 'components/Heading/Heading';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import plusIcon from 'assets/icons/plus.svg';
 import iksIcon from 'assets/icons/iks.svg';
 import { addUser as addUserAction } from 'actions';
-import { Formik, Form } from 'formik';
-
-const StyledWrapper = styled.div`
-  border-left: 10px solid ${({ theme }) => theme.add};
-  z-index: 9999;
-  position: fixed;
-  display: flex;
-  padding: 10px 30px;
-  flex-direction: column;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: white;
-`;
-
-const StyledForm = styled(Form)`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledInput = styled(Input)`
-  margin-top: 20px;
-`;
-
-const StyledTextarea = styled(Input)`
-  margin-top: 20px;
-  height: 30vh;
-`;
-
-const Error = styled.span`
-  color: red;
-  font-weight: ${({ theme }) => theme.light};
-`;
+import { Formik } from 'formik';
+import { StyledWrapper, StyledForm, StyledInput, StyledTextarea } from 'styles/users';
+import { Error } from 'styles/error';
 
 const UserAdd = ({ toggleCreate, create, addUser }) => {
   return (

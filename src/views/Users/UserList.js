@@ -3,24 +3,12 @@ import phoneNumberPropType from 'phone-number-prop-type';
 import { connect } from 'react-redux';
 import { toggleCreate as toggleCreateAction } from 'actions';
 import PropTypes from 'prop-types';
-import Heading from 'components/Heading/Heading';
-import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import ButtonIcon from 'components/ButtonIcon/ButtonIcon';
 import plusIcon from 'assets/icons/plus.svg';
+import { ContentWrapper, StyledHeading } from 'styles/users';
 import UserItem from './UserItem';
 import UserAdd from './UserAdd';
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  margin: 20px 0 0 0;
-`;
-
-const StyledHeading = styled(Heading)`
-  color: ${({ theme }) => theme.add};
-  text-transform: uppercase;
-  text-align: center;
-`;
 
 const UserList = ({ users, create, toggleCreate }) => (
   <ContentWrapper>

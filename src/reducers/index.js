@@ -2,7 +2,6 @@ import {
   ADD_USER,
   REMOVE_ITEM,
   TOGGLE_CREATE,
-  EDIT_USER,
   UPDATE_USER,
   ADD_POST,
   ADD_COMMENT,
@@ -10,10 +9,10 @@ import {
 
 const initialState = {
   create: false,
-  edit: false,
   userId: 3,
   postId: 3,
   commentId: 4,
+  auth: [{ login: 'admin', password: 'qwerty' }],
   users: [
     {
       id: 1,
@@ -91,7 +90,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         comments: [...state.comments, action.payload],
-        create: !state.create,
+        create: false,
         commentId: state.commentId + 1,
       };
     case TOGGLE_CREATE:
@@ -99,22 +98,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         create: !state.create,
       };
-    case EDIT_USER:
-      return {
-        ...state,
-        edit: !state.edit,
-      };
     case UPDATE_USER:
       return {
         ...state,
-        users: state.users.map(user => {
-          if (user.id !== action.payload.id) {
-            return user;
-          }
-          return action.payload;
-        }),
-        edit: !state.edit,
+        users: state.users.map(user => (user.id !== action.payload.id ? user : action.payload)),
       };
+
     default:
       return state;
   }

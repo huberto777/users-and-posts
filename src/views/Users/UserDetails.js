@@ -2,49 +2,27 @@
 /* eslint-disable react/state-in-constructor */
 import React from 'react';
 import phoneNumberPropType from 'phone-number-prop-type';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toggleCreate as toggleCreateAction } from 'actions';
-import Button from 'components/Button/Button';
 import styled from 'styled-components';
 import PostAdd from 'views/Posts/PostAdd';
 import PostItem from 'views/Posts/PostItem';
 import PropTypes from 'prop-types';
+import { routes } from 'routes';
+import { StyledButton, Item, ItemValue } from 'styles/users';
 
 const StyledWrapper = styled.div`
   margin: 20px 0 0 0;
   width: 100%;
 `;
 
-const StyledButton = styled(Button)`
-  margin-bottom: 20px;
-  width: 100%;
-  height: 30px;
-`;
-
-const Item = styled.div`
-  width: 15%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.grey300};
-  font-weight: ${({ theme }) => theme.bold};
-  float: left;
-  margin-bottom: 30px;
-`;
-const ItemValue = styled.div`
-  width: 85%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  float: left;
-  margin-bottom: 30px;
-`;
-
 const UserDetails = ({ activeItem, posts, create, toggleCreate, match }) => {
   const [user] = activeItem;
   // console.log(activeItem);
+  if (!user) {
+    return <Redirect to={routes.home} />;
+  }
   return (
     <StyledWrapper>
       <div>
